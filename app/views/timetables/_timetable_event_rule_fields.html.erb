@@ -1,4 +1,4 @@
 <div class="fields">
-	Every <%= f.input :event_period_recurrance, :label => false %> on the <%= f.input :event_period_number, :label => false %> <%= f.association :event_period, :label => false %> 
+	Every <%= f.input :event_period_recurrance, :label => false %> <%= timetable_period_dimension("weekly") %> on the <%= f.input :event_period_number, :label => false %> <%= f.association :event_period, :label => false %> 
 	<%= link_to_remove_fields "delete", f %>
 </div>
