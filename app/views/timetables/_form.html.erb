@@ -1,0 +1,18 @@
+<%= simple_form_for @timetable do |f| %>
+<% if @timetable.errors.any? %>
+   <ul>
+      <% @timetable.errors.full_messages.each do |msg| %>
+         <li><%= msg %></li>
+      <% end %>
+   </ul>
+<% end %>
+<%= f.input :name, :label => 'timetable Name: ' %>
+<%= f.association :timetable_period, :label => 'timetable Period: ' %>
+<br></br>
+<%= f.fields_for :timetable_event_periods do |builder| %>
+    <%= render 'timetable_event_period_fields', :f => builder %>
+<% end %>
+<br></br>
+<%= f.submit "Save" %>
+<%= f.submit "Cancel" %>
+<% end %>

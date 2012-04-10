@@ -1,0 +1,17 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Action</th>
+  </tr>
+<% @timetables.each do |timetable| %>
+  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    <td>
+      <%= timetable.name %>
+    </td>
+    <td class="list_actions">
+      <%= link_to 'Edit', edit_timetable_path(timetable) %>
+      <%= link_to 'Delete', timetable, :confirm => 'Are you sure?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
