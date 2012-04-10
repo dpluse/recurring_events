@@ -78,8 +78,8 @@ private
 
   def create_subform_attributes
     timetable_event_period = TimetableEventPeriod.new 
-    timetable_event_rule = TimetableEventRule.new
-    timetable_event_period.timetable_event_rules.push(timetable_event_rule)
+    #timetable_event_rule = TimetableEventRule.new
+    #timetable_event_period.timetable_event_rules.push(timetable_event_rule)
     @timetable.timetable_event_periods.push(timetable_event_period)
   end
 
