@@ -14,7 +14,8 @@ class TimetablesController < ApplicationController
   # GET /timetables/new.xml
   def new
     @timetable = Timetable.new
-    create_subform_attributes
+    #create_subform_attributes
+    @schedule = @timetable.schedule_hash
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @timetable }
@@ -77,10 +78,10 @@ private
   end
 
   def create_subform_attributes
-    timetable_event_period = TimetableEventPeriod.new 
+    #timetable_event_period = TimetableEventPeriod.new 
     #timetable_event_rule = TimetableEventRule.new
     #timetable_event_period.timetable_event_rules.push(timetable_event_rule)
-    @timetable.timetable_event_periods.push(timetable_event_period)
+    #@timetable.timetable_event_periods.push(timetable_event_period)
   end
 
 end

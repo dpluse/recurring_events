@@ -12,20 +12,4 @@ module ApplicationHelper
     link_to_function(name, "add_fields(this, \"#{association}\", \"#{escape_javascript(fields)}\")")
   end
   
-  def timetable_period_dimension(period_literal)
-      puts "period_literal: " + period_literal.inspect
-      case period_literal
-      when "daily"
-        "day"
-      when "weekly"
-        "week"
-      when "monthly"
-        "month"
-      when "yearly"
-        "year"
-      else
-        "day"
-      end
-  end
-
 end

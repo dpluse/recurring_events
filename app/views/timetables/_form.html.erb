@@ -6,12 +6,12 @@
       <% end %>
    </ul>
 <% end %>
-<%= f.input :name, :label => 'timetable Name: ' %>
-<%= f.association :timetable_period, :label => 'timetable Period: ' %>
-<br></br>
-<%= f.fields_for :timetable_event_periods do |builder| %>
-    <%= render 'timetable_event_period_fields', :f => builder %>
-<% end %>
+<%= f.input :name, :label => 'Timetable Name: ' %>
+<%= f.input :start_date, :as => :datetime, :label => "Start Date: " %>
+<%= f.input :interval, :as => :integer %>
+<%= f.input :day_of_month, :as => :integer %>
+<%= f.input :day, :collection => [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday] %>
+<%= f.input :month_of_year, :collection => [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december] %>
 <br></br>
 <%= f.submit "Save" %>
 <%= f.submit "Cancel" %>
