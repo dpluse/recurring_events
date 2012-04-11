@@ -15,7 +15,7 @@ class TimetablesController < ApplicationController
   def new
     @timetable = Timetable.new
     #create_subform_attributes
-    @schedule = @timetable.schedule_hash
+    # @schedule = @timetable.schedule_hash
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @timetable }
@@ -23,6 +23,7 @@ class TimetablesController < ApplicationController
   end
 
   def create
+    puts params.inspect
     @timetable = Timetable.new(params[:timetable])
     respond_to do |format|
       if @timetable.save
