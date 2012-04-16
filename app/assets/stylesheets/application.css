@@ -11,3 +11,19 @@
  *= require_self
  *= require_tree .
 */
+
+.interval_field {
+	display: none;
+}
+
+.day_of_month_field {
+	display: none;
+}
+
+.day_field {
+	display: none;
+}
+
+.month_of_year_field {
+	display: none;
+}

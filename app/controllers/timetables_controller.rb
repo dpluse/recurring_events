@@ -14,8 +14,7 @@ class TimetablesController < ApplicationController
   # GET /timetables/new.xml
   def new
     @timetable = Timetable.new
-    #create_subform_attributes
-    # @schedule = @timetable.schedule_hash
+    @timetable.schedule_test
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @timetable }
@@ -23,8 +22,9 @@ class TimetablesController < ApplicationController
   end
 
   def create
-    puts params.inspect
+    puts "parmas: " + params.inspect
     @timetable = Timetable.new(params[:timetable])
+    @timetable.before_save
     respond_to do |format|
       if @timetable.save
         format.html { redirect_to(timetables_path, :notice => 'timetabled event was successfully created.') }
@@ -39,6 +39,7 @@ class TimetablesController < ApplicationController
   # GET /avoid_times/1/edit
   def edit
     @timetable = Timetable.find(params[:id])
+    @timetable.before_edit
   end
 
   def update
@@ -76,13 +77,6 @@ private
         format.xml  { head :ok }
       end 
     end
-  end
-
-  def create_subform_attributes
-    #timetable_event_period = TimetableEventPeriod.new 
-    #timetable_event_rule = TimetableEventRule.new
-    #timetable_event_period.timetable_event_rules.push(timetable_event_rule)
-    #@timetable.timetable_event_periods.push(timetable_event_period)
   end
 
 end

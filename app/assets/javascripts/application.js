@@ -24,3 +24,35 @@ function add_fields(link, association, content) {
   var regexp = new RegExp("new_" + association, "g")
   $(link).parent().before(content.replace(regexp, new_id));
 }
+
+$(document).ready(function() {
+   $(".rule_type_select").live("change", function() {
+	  switch($(this).val())
+	  {
+	  	case "daily":
+	  		$(this).parents('div.fields').children(".interval_field").show();
+	  		$(this).parents('div.fields').children(".day_field").hide();
+	  		$(this).parents('div.fields').children(".day_of_month_field").hide();
+	  		$(this).parents('div.fields').children(".month_of_year_field").hide();
+	  		break;
+	  	case "weekly":
+	  		$(this).parents('div.fields').children(".interval_field").show();
+	  		$(this).parents('div.fields').children(".day_field").show();
+	  		$(this).parents('div.fields').children(".day_of_month_field").hide();
+	  		$(this).parents('div.fields').children(".month_of_year_field").hide();
+	  		break;
+	  	case "monthly":
+	  		$(this).parents('div.fields').children(".interval_field").show();
+	  		$(this).parents('div.fields').children(".day_field").show();
+	  		$(this).parents('div.fields').children(".day_of_month_field").show();
+	  		$(this).parents('div.fields').children(".month_of_year_field").hide();
+	  		break;
+	  	case "yearly":
+	  		$(this).parents('div.fields').children(".interval_field").show();
+	  		$(this).parents('div.fields').children(".day_field").show();
+	  		$(this).parents('div.fields').children(".day_of_month_field").show();
+	  		$(this).parents('div.fields').children(".month_of_year_field").show();
+	  		break;
+	  } 
+	});
+ });

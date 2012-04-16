@@ -8,12 +8,12 @@
 <% end %>
 <%= f.input :name, :label => 'Timetable Name: ' %>
 <%#= f.input :start_date, :as => :datetime, :label => "Start Date: " %>
-<%= f.input :rule_type, :collection => [:daily, :weekly, :monthly, :yearly] %>
-<%= f.input :interval, :as => :integer %>
-<%= f.input :day_of_month, :as => :integer %>
-<%= f.input :day, :collection => [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday] %>
-<%= f.input :month_of_year, :collection => [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december] %>
+<div class = "fields">
+	<%= link_to_add_fields "Add Rule", f %>
+	
+</div>
 <br></br>
+
 <%= f.submit "Save" %>
 <%= f.submit "Cancel" %>
 <% end %>

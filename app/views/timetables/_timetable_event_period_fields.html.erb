@@ -1,8 +1,0 @@
-<div class="fields">
-	<%= f.fields_for :timetable_event_rules do |builder| %>
-	    <%= render 'timetable_event_rule_fields', :f => builder %>
-	<% end %>
-	<%= link_to_add_fields "Add Rule", f, :timetable_event_rules %>
-	<%= f.input :next_event, :label => 'Next Event: ' %>
-	<%= f.input :end_event, :label => 'End Event: ' %>
-</div>
