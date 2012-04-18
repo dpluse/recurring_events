@@ -16,7 +16,7 @@
 
 function remove_fields(link) {
   $(link).prev("input[type=hidden]").val("1");
-  $(link).closest(".fields").hide();
+  $(link).closest(".fields").remove();
 }
 
 function add_fields(link, association, content) {
@@ -31,21 +31,21 @@ $(document).ready(function() {
 	  {
 	  	case "daily":
 	  		$(this).parents('div.fields').children(".interval_field").show();
-	  		$(this).parents('div.fields').children(".day_field").hide();
-	  		$(this).parents('div.fields').children(".day_of_month_field").hide();
-	  		$(this).parents('div.fields').children(".month_of_year_field").hide();
+	  		$(this).parents('div.fields').children(".day_field").remove();
+	  		$(this).parents('div.fields').children(".day_of_month_field").remove();
+	  		$(this).parents('div.fields').children(".month_of_year_field").remove();
 	  		break;
 	  	case "weekly":
 	  		$(this).parents('div.fields').children(".interval_field").show();
 	  		$(this).parents('div.fields').children(".day_field").show();
-	  		$(this).parents('div.fields').children(".day_of_month_field").hide();
-	  		$(this).parents('div.fields').children(".month_of_year_field").hide();
+	  		$(this).parents('div.fields').children(".day_of_month_field").remove();
+	  		$(this).parents('div.fields').children(".month_of_year_field").remove();
 	  		break;
 	  	case "monthly":
 	  		$(this).parents('div.fields').children(".interval_field").show();
 	  		$(this).parents('div.fields').children(".day_field").show();
 	  		$(this).parents('div.fields').children(".day_of_month_field").show();
-	  		$(this).parents('div.fields').children(".month_of_year_field").hide();
+	  		$(this).parents('div.fields').children(".month_of_year_field").remove();
 	  		break;
 	  	case "yearly":
 	  		$(this).parents('div.fields').children(".interval_field").show();

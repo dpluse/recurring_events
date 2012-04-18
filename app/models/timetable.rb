@@ -11,7 +11,7 @@ class Timetable < ActiveRecord::Base
 	#  :rtimes=>[],
 	#  :extimes=>[]}
 
-  attr_accessor :start_date, :rules_hash, :interval, :day_of_month, :day, :month_of_year, :rule_type, :rule_hash
+  attr_accessor :start_date, :interval, :day_of_month, :day, :month_of_year, :rule_type, :rule_hash
   validates :name, :presence => true
   serialize :schedule, Hash
 
@@ -19,9 +19,9 @@ class Timetable < ActiveRecord::Base
 	months = [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december]
 	period = [:daily, :weekly, :monthly, :yearly]
 
-   def schedule=(new_schedule)
-     write_attribute(:schedule, new_schedule.to_hash)
-   end
+  def schedule=(new_schedule)
+   write_attribute(:schedule, new_schedule.to_hash)
+  end
 
 	def schedule
    	Schedule.from_hash(read_attribute(:schedule))
@@ -57,15 +57,19 @@ class Timetable < ActiveRecord::Base
   end
 
 	def before_save
-		new_schedule = Schedule.new(@start_date.blank? ? Time.now : @start_date)
-  	i = @interval.blank? ? 1 : @interval.to_i
-  	rule = case @rule_type
-      when 'daily'
-        Rule.daily(i)
-    	end
+		new_schedule = Schedule.new(self.start_date.blank? ? Time.now : self.start_date)
+    
+    case self.rule_hash[0]["rule_type"].to_s
+    when 'daily'
+      i = self.rule_hash[0]["interval"].to_i.blank? ? 1 : self.rule_hash[0]["interval"].to_i
+      rule = Rule.daily(i)
 
-    	# Interate through the virtualrules hash and add the rules
-    	new_schedule.add_recurrence_rule(rule)
-      self.schedule = new_schedule  
+      new_schedule.add_recurrence_rule Rule.daily(i)
+      puts "******************** new_schedule"+new_schedule.to_hash.inspect
+      self.schedule = new_schedule
+  	end
+
+  	# Interate through the virtualrules hash and add the rules
+  	
 	end
 end

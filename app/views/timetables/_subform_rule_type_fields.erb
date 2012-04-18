@@ -5,5 +5,5 @@
 	<%= f.input :day_of_month, :as => :integer, :required => false, :wrapper_html => { :class => 'day_of_month_field', :hidden => true } %>
 	<%= f.input :day, :collection => [:sunday, :monday, :tuesday, :wednesday, :thursday, :friday, :saturday], :required => false, :wrapper_html => { :class => 'day_field', :hidden => true } %>
 	<%= f.input :month_of_year, :collection => [:january, :february, :march, :april, :may, :june, :july, :august, :september, :october, :november, :december], :required => false, :wrapper_html => { :class => 'month_of_year_field', :hidden => true } %>
-	<%= link_to_remove_fields "Remove Rule", f %>
+	<%#= link_to_remove_fields "Remove Rule", f %>
 </div>
