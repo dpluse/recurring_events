@@ -60,4 +60,13 @@ RecurringEvents::Application.routes.draw do
 
   resources :timetables
 
+  resource :fullcalendars do
+    get 'index'
+    get 'one'
+    get 'two'
+    get 'three'
+    get 'three_events'
+    get 'four'
+    get 'four_events'
+  end
 end

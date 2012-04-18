@@ -1,3 +1,4 @@
+def examples
 examples = []
 examples[0] = "---
 :start_date: 2012-04-10 16:23:42.241685000 +01:00
@@ -311,3 +312,5 @@ examples[23] = "---
 :rtimes: []
 :extimes: []
 "
+examples
+end

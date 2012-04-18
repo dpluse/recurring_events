@@ -69,10 +69,22 @@ rules << Rule.hourly(2).day(:monday) # every other hour, on mondays
 rules << Rule.minutely(10) # every 10 minutes
 rules << Rule.minutely(90).day_of_week(:tuesday => [-1]) # every hour and a half, on the last tuesday of the month
 
+now     = Time.now
+times   = []
+times << now
+times << now + 3600
+times << now + 3600 * 2
+times << now + 3600 * 3
+times << now - 3600
+times << now - 3600 * 2
+times << now - 3600 * 3
+ 
 rules.each_with_index do |rule, index|
-  schedule = Schedule.new(Time.now)  
+  time_index = Random.rand(0..(times.size))
+  schedule = Schedule.new(times[time_index])
   schedule.add_recurrence_rule rule
-  # output(schedule, index)  # Creates a human readable output.
-  output_to_hash(schedule, index)  # Generates a Ruby parseable file, run with  ruby ./lib/ice_cube_examples.rb > ./lib/examples.rb
+  output(schedule, index)  # Creates a human readable output.
+  # output_to_hash(schedule, index)  # Generates a Ruby parseable file, run with  ruby ./lib/ice_cube_examples.rb > ./lib/examples.rb
+  Timetable.find_or_create_by_name(name: schedule.to_s, schedule: schedule) # Creates DB rows.
 end
 
