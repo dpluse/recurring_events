@@ -1,4 +1,4 @@
-class Events
+class FullCalendarEvents
   include IceCube
   require 'digest/sha1'
   

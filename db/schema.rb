@@ -11,11 +11,36 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120311175810) do
+ActiveRecord::Schema.define(:version => 20120419151622) do
+
+  create_table "events", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "created_at"
+    t.integer  "created_by_user_id"
+    t.integer  "updated_by_user_id"
+    t.datetime "updated_at"
+    t.integer  "timetable_id"
+  end
+
+  create_table "timetable_schedules", :force => true do |t|
+    t.text     "schedule"
+    t.integer  "event_duration"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.datetime "created_at"
+    t.integer  "created_by_user_id"
+    t.integer  "updated_by_user_id"
+    t.datetime "updated_at"
+    t.integer  "timetable_id"
+  end
 
   create_table "timetables", :force => true do |t|
     t.string   "name"
-    t.text     "schedule"
     t.datetime "created_at"
     t.integer  "created_by_user_id"
     t.integer  "updated_by_user_id"
