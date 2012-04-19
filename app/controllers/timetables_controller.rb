@@ -22,9 +22,7 @@ class TimetablesController < ApplicationController
   end
 
   def create
-    puts "parmas: " + params.inspect
     @timetable = Timetable.new(params[:timetable])
-    puts "timetable= "+@timetable.rule_hash[0]["rule_type"].inspect
     @timetable.before_save
     respond_to do |format|
       if @timetable.save

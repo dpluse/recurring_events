@@ -33,7 +33,7 @@ class Events
       if occurrances.empty?
         nil
       else
-        event = {name: timetable.schedule.to_s,
+        event = {name: timetable.name,
                  occurrances: occurrances}
       end
     end.compact

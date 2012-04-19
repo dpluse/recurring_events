@@ -32,13 +32,10 @@ class Timetable < ActiveRecord::Base
 		rule1 = Rule.yearly(1).day_of_month(13).day(:friday).month_of_year(:october, :november)
 		rule2 = Rule.yearly(1).day_of_month(14).day(:wednesday).month_of_year(:december)
     rule3 = Rule.daily(3).day(:tuesday)
-    puts "******** rule3:  " + rule3.to_s
     #schedule.add_recurrence_rule rule1
     #schedule.add_recurrence_rule rule2
     schedule.add_recurrence_rule rule3
-    puts "****** dates: " + schedule.occurrences(Time.now+30.days).inspect
     schedule.to_hash
-    puts "******* schedule_test: " + schedule.to_hash.inspect
  	end
 
   def before_edit
@@ -65,7 +62,6 @@ class Timetable < ActiveRecord::Base
       rule = Rule.daily(i)
 
       new_schedule.add_recurrence_rule Rule.daily(i)
-      puts "******************** new_schedule"+new_schedule.to_hash.inspect
       self.schedule = new_schedule
   	end
 
