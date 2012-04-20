@@ -1,9 +1,27 @@
 <%= content_for :head do %>
-  <title>Fullcalendar 4th demo</title>
+  <title>Fullcalendar 5th demo</title>
 <% end %>
 
   <script type='text/javascript'>
     $(document).ready(function() {
+      
+      var $start_counter = $( "#event-start" ),
+    			$drag_counter = $( "#event-drag" ),
+    			$stop_counter = $( "#event-stop" ),
+    			counts = [ 0, 0, 0 ];
+    			
+	    function updateCounterStatus( $event_counter, new_count , say_hello) {
+	      if (say_hello) {
+          // alert("updateCounterStatus()");
+        }
+        // first update the status visually...
+        // if ( !$event_counter.hasClass( "ui-state-hover" ) ) {
+        //   $event_counter.addClass( "ui-state-hover" )
+        //     .siblings().removeClass( "ui-state-hover" );
+        // }
+        // ...then update the numbers
+        $( "span.count", $event_counter ).text( new_count );
+      }
 
       /* initialize the external events
       -----------------------------------------------------------------*/
@@ -14,7 +32,7 @@
         var eventObject = {
           title: $.trim($(this).text()) // use the element's text as the event title
         };
-
+      
         // store the Event Object in the DOM element so we can get to it later
         $(this).data('eventObject', eventObject);
 
@@ -22,9 +40,20 @@
         $(this).draggable({
           zIndex: 999,
           revert: true,      // will cause the event to go back to its
-          revertDuration: 0  //  original position after the drag
+          revertDuration: 0,  //  original position after the drag
+          start: function() {
+            counts[ 0 ]++;
+            updateCounterStatus( $start_counter, counts[ 0 ], false);
+          },
+          drag: function() {
+            counts[ 1 ]++;
+            updateCounterStatus( $drag_counter, counts[ 1 ], false);
+          },
+          stop: function() {
+            counts[ 2 ]++;
+            updateCounterStatus( $stop_counter, counts[ 2 ], false);
+          }
         });
-
       });
 
 
@@ -35,10 +64,20 @@
           left: 'prev,next today',
           center: 'title',
           right: 'month,agendaWeek,agendaDay'
+          // right: 'agendaWeek'
         },
+        firstDay: 1,
+        defaultView: 'agendaWeek',
         editable: true,
-        events: "../four_events/",
+        events: "../five_good_events/",
         droppable: true, // this allows things to be dropped onto the calendar !!!
+        timeFormat: 'H:mm', // uppercase H for 24-hour clock
+        columnFormat: {
+          // agenda: 'A ddd d/M',  // Mon 9/7
+          month: 'ddd',     // Mon
+          agendaWeek: 'ddd d/M',  // Mon 31/12
+          day: 'dddd d/M',  // Monday 31/12
+        },
         drop: function(date, allDay) { // this function is called when something is dropped
 
           // retrieve the dropped element's stored Event Object
@@ -61,8 +100,34 @@
             $(this).remove();
           }
 
+        },
+        eventDragStart: function() {
+          counts[ 0 ]++;
+          // alert("eventDragStart()");
+          updateCounterStatus($start_counter, counts[0], true);
+        },
+        // eventDragStop: function() {
+        //   counts[ 1 ]++;
+        //   alert("eventDragStop()");
+        //   updateCounterStatus($drag_counter, counts[1], false);
+        // },
+        eventDrop: function() {
+          counts[ 2 ]++;
+          // alert("eventDrop()");
+          updateCounterStatus($stop_counter, counts[2], true);
         }
       });
+      
+      // function updateCounterStatus2( $event_counter, new_count ) {
+      //   // first update the status visually...
+      //   if ( !$event_counter.hasClass( "ui-state-hover" ) ) {
+      //     $event_counter.addClass( "ui-state-hover" )
+      //       .siblings().removeClass( "ui-state-hover" );
+      //   }
+      //   // ...then update the numbers
+      //   $( "span.count", $event_counter ).text( new_count );
+      // }
+      
     });
   </script>
   
@@ -119,12 +184,41 @@
       float: right;
       width: 900px;
       }
+      
+    .good_events {
+      opacity: .4;
+      filter: alpha(opacity=40);
+    	border-color: #68CC3A;
+    	background-color: #57CC37;
+    	color: #57CC37;
+/*      border: 3px solid #57CC37;*/
+    }
+    
+    .good_events .fc-event-content {
+      /*background-color: #CC6A1A;*/
+      /*background-color: #CC6A1A;*/
+      color: #57CC37;
+    }
+    
+    .good_events .fc-event-skin {
+      background-color: #57CC37;
+      border-color: #57CC37;
+      color: #57CC37;
+    }
+    
+    .good_events .fc-event-skin .fc-event-time {
+      background-color: #57CC37;
+      color: #57CC37;
+    }
+    
+    
+    
   </style>
 
 
 <a href="../">Back to Calendars</a>
-<h1>Fullcalendar Example Four</h1>
-<h2 style="color: red;">Broken due to DB changes</h2>
+<h1>Fullcalendar Example Five</h1>
+
 
 <div id='wrap'>
   <div id='external-events'>
@@ -140,6 +234,12 @@
     <hr />
       <%= @events.inspect %>
     <hr />
+      <ul class="ui-helper-reset">
+        <li id="event-start" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-play"></span>"start" invoked <span class="count">0</span>x</li>
+        <li id="event-drag" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-arrow-4"></span>"drag" invoked <span class="count">0</span>x</li>
+        <li id="event-stop" class="ui-state-default ui-corner-all"><span class="ui-icon ui-icon-stop"></span>"stop" invoked <span class="count">0</span>x</li>
+      </ul>
+    </hr>
   </div>
   <div id='calendar'></div>
   <div style='clear:both'></div>
