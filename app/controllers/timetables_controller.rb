@@ -14,7 +14,7 @@ class TimetablesController < ApplicationController
   # GET /timetables/new.xml
   def new
     @timetable = Timetable.new
-    @timetable.schedule_test
+    @timetable_schedules = @timetable.timetable_schedules.build
     respond_to do |format|
       format.html # new.html.erb
       format.xml  { render :xml => @timetable }
@@ -23,7 +23,7 @@ class TimetablesController < ApplicationController
 
   def create
     @timetable = Timetable.new(params[:timetable])
-    @timetable.before_save
+    #@timetable.before_save
     respond_to do |format|
       if @timetable.save
         format.html { redirect_to(timetables_path, :notice => 'timetabled event was successfully created.') }
@@ -38,7 +38,7 @@ class TimetablesController < ApplicationController
   # GET /avoid_times/1/edit
   def edit
     @timetable = Timetable.find(params[:id])
-    @timetable.before_edit
+    #@timetable.before_edit
   end
 
   def update

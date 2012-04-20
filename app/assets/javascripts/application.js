@@ -14,10 +14,21 @@
 //= require jquery_ujs
 //= require_tree .
 
-function remove_fields(link) {
-  $(link).prev("input[type=hidden]").val("1");
-  $(link).closest(".fields").remove();
-}
+
+jQuery(function() {
+  $('form').on('click', '.remove_fields', function(event) {
+    $(this).prev('input[type=hidden]').val('1');
+    $(this).closest('fieldset').hide();
+    return event.preventDefault();
+  });
+  return $('form').on('click', '.add_fields', function(event) {
+    var regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(this).data('id'), 'g');
+    $(this).before($(this).data('fields').replace(regexp, time));
+    return event.preventDefault();
+  });
+});
 
 function add_fields(link, association, content) {
   var new_id = new Date().getTime();
@@ -25,34 +36,7 @@ function add_fields(link, association, content) {
   $(link).parent().before(content.replace(regexp, new_id));
 }
 
-$(document).ready(function() {
-   $(".rule_type_select").live("change", function() {
-	  switch($(this).val())
-	  {
-	  	case "daily":
-	  		$(this).parents('div.fields').children(".interval_field").show();
-	  		$(this).parents('div.fields').children(".day_field").remove();
-	  		$(this).parents('div.fields').children(".day_of_month_field").remove();
-	  		$(this).parents('div.fields').children(".month_of_year_field").remove();
-	  		break;
-	  	case "weekly":
-	  		$(this).parents('div.fields').children(".interval_field").show();
-	  		$(this).parents('div.fields').children(".day_field").show();
-	  		$(this).parents('div.fields').children(".day_of_month_field").remove();
-	  		$(this).parents('div.fields').children(".month_of_year_field").remove();
-	  		break;
-	  	case "monthly":
-	  		$(this).parents('div.fields').children(".interval_field").show();
-	  		$(this).parents('div.fields').children(".day_field").show();
-	  		$(this).parents('div.fields').children(".day_of_month_field").show();
-	  		$(this).parents('div.fields').children(".month_of_year_field").remove();
-	  		break;
-	  	case "yearly":
-	  		$(this).parents('div.fields').children(".interval_field").show();
-	  		$(this).parents('div.fields').children(".day_field").show();
-	  		$(this).parents('div.fields').children(".day_of_month_field").show();
-	  		$(this).parents('div.fields').children(".month_of_year_field").show();
-	  		break;
-	  } 
-	});
- });
+function add_rule(content, link) {
+	$(link).parent().children(".rule").hide();
+	$(link).siblings(".rules").append(content);
+}

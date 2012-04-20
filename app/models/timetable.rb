@@ -1,8 +1,12 @@
 class Timetable < ActiveRecord::Base
 	include IceCube
 
+  attr_accessible :timetable_schedules_attributes, :timetable_schedule, :name
+
   has_many :timetable_schedules
   has_many :events
+
+  accepts_nested_attributes_for :timetable_schedules, allow_destroy: true
 
 
   attr_accessor :schedules

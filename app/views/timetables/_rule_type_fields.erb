@@ -1,0 +1,10 @@
+<fieldset>
+	<%= f.select :rule_type, options_for_select([:daily, :weekly, :monthly, :yearly]) %>
+	<%= f.text_field :interval %>
+
+	<div class="field">
+		<br />
+		<%= link_to_add_rule_fields "Add Rule", f %>
+	</div>
+	
+</fieldset>

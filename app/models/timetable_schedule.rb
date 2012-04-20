@@ -5,7 +5,7 @@ class TimetableSchedule < ActiveRecord::Base
 
 
   RULE_TYPES = %w(rrule add_recurrence_rule exrule add_exception_rule extime add_exception_time rtime add_recurrence_time)
-  attr_accessor :rules
+  attr_accessor :rules, :rule_hash
   serialize :schedule, Hash
 
 

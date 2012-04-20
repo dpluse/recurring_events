@@ -1,0 +1,15 @@
+<fieldset>
+	<%= f.label :start_time %>
+	<%= f.time_select :start_time %> <br /><br />
+	<%= f.label :event_duration %>
+	<%= f.text_field :event_duration %> <br /><br />
+	<%= f.hidden_field :_destroy %>
+
+	<div class="field">
+		<%= f.fields_for :rule_hash do |builder| %>
+			<%= render :partial => "rule_type_fields", :locals => {:f => builder} %>
+		<% end %>
+	</div>
+
+	<%= link_to "remove timetable schedule", '#', :class => "remove_fields" %>
+</fieldset>

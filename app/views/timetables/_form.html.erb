@@ -1,18 +1,22 @@
-<%= simple_form_for @timetable do |f| %>
-<% if @timetable.errors.any? %>
-   <ul>
-      <% @timetable.errors.full_messages.each do |msg| %>
-         <li><%= msg %></li>
-      <% end %>
-   </ul>
-<% end %>
-<%= f.input :name, :label => 'Timetable Name: ' %>
-<%#= f.input :start_date, :as => :datetime, :label => "Start Date: " %>
-<div class = "fields">
-	<%= link_to_add_fields "Add Rule", f %>
-</div>
-<br></br>
+<%= form_for @timetable do |f| %>
 
-<%= f.submit "Save" %>
-<%= f.submit "Cancel" %>
+	<div class="field">
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+	</div>
+
+	<div class="field">
+		<%= f.fields_for :timetable_schedules do |builder| %>
+			<%= render :partial => "timetable_schedule_fields", :locals => {:f => builder} %>
+		<% end %>
+	</div>
+
+	<br />
+	<%= link_to_add_fields "Add Timetable Schedule", f, :timetable_schedules %>
+	
+	<br />
+	<br />
+
+	
+	<%= f.submit "Save" %>
 <% end %>
