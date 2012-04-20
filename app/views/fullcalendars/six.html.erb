@@ -1,5 +1,5 @@
 <%= content_for :head do %>
-  <title>Fullcalendar 4th demo</title>
+  <title>Fullcalendar 6th demo</title>
 <% end %>
 
   <script type='text/javascript'>
@@ -35,10 +35,20 @@
           left: 'prev,next today',
           center: 'title',
           right: 'month,agendaWeek,agendaDay'
+          // right: 'agendaWeek'
         },
+        firstDay: 1,
+        defaultView: 'agendaWeek',
         editable: true,
-        events: "../four_events/",
+        events: "../five_good_events/",
         droppable: true, // this allows things to be dropped onto the calendar !!!
+        timeFormat: 'H:mm', // uppercase H for 24-hour clock
+        columnFormat: {
+          // agenda: 'A ddd d/M',  // Mon 9/7
+          month: 'ddd',     // Mon
+          agendaWeek: 'ddd d/M',  // Mon 31/12
+          day: 'dddd d/M',  // Monday 31/12
+        },
         drop: function(date, allDay) { // this function is called when something is dropped
 
           // retrieve the dropped element's stored Event Object
@@ -123,8 +133,7 @@
 
 
 <a href="../">Back to Calendars</a>
-<h1>Fullcalendar Example Four</h1>
-<h2 style="color: red;">Broken due to DB changes</h2>
+<h1>Fullcalendar Example Six</h1>
 
 <div id='wrap'>
   <div id='external-events'>

@@ -68,5 +68,8 @@ RecurringEvents::Application.routes.draw do
     get 'three_events'
     get 'four'
     get 'four_events'
+    get 'five'
+    get 'five_good_events'
+    get 'six'
   end
 end

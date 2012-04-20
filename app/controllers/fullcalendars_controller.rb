@@ -35,12 +35,45 @@ class FullcalendarsController < ApplicationController
   
   
   def four_events
-    @events = Events.new(params[:start], params[:end])
+    @events = FullCalendarEvents.new(params[:start], params[:end])
     respond_to do |format|
       # format.html # index.html.erb
       # format.xml  { render :xml => @events }
       format.js  { render :json => @events.find }
     end
+  end
+  
+  def five_good_events
+    respond_to do |format|
+      format.js  { render :json => good_events }
+    end
+  end
+  
+  private
+  
+  def good_events
+    now     = DateTime.now
+    year    = now.year
+    month   = now.month
+    day     = now.day
+    day_mon = now.beginning_of_week.day
+    day_sun = now.end_of_week.day
+    hour    = now.hour
+    minute  = now.minute
+    second  = now.second
+    
+    events = []
+    %w(Monday Tuesday Wednesday Thursday Friday).each_with_index do |day, index|
+      events << { :id => "#{index}1".to_i, :title => "#{day} morning", :allDay => false, :editable => false, :className => 'good_events',
+                  :start => Time.new(year, month, day_mon + index, 8, 0, 0).to_i,
+                  :end => Time.new(year, month, day_mon + index, 12, 0, 0).to_i
+                }
+      events << { :id => "#{index}2".to_i, :title => "#{day} afternoon", :allDay => false, :editable => false, :className => 'good_events',
+                  :start => Time.new(year, month, day_mon + index, 13, 0, 0).to_i,
+                  :end => Time.new(year, month, day_mon + index, 17, 0, 0).to_i
+                }
+    end
+    events
   end
   
 end
