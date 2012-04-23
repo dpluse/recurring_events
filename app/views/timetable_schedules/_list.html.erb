@@ -1,0 +1,25 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Action</th>
+  </tr>
+<% @timetable_schedules.each do |timetable_schedule| %>
+  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    <td>
+      <%= timetable_schedule.name %>
+    </td>
+    <td>
+      <%= timetable_schedule.start_date %>
+    </td>
+    <td>
+      <%= timetable_schedule.end_date %>
+    </td>
+    <td class="list_actions">
+      <%= link_to 'Edit', edit_timetable_schedule_path(timetable_schedule) %>
+      <%= link_to 'Delete', timetable_schedule, :confirm => 'Are you sure?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>

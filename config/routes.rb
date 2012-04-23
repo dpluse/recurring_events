@@ -56,9 +56,10 @@ RecurringEvents::Application.routes.draw do
   # Note: This route will make all actions in every controller accessible via GET requests.
   # match ':controller(/:action(/:id))(.:format)'
 
-  root :to => 'timetables#index'
+  root :to => 'timetable_schedules#index'
 
   resources :timetables
+  resources :timetable_schedules
 
   resource :fullcalendars do
     get 'index'

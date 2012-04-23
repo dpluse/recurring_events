@@ -18,7 +18,7 @@
 jQuery(function() {
   $('form').on('click', '.remove_fields', function(event) {
     $(this).prev('input[type=hidden]').val('1');
-    $(this).closest('fieldset').hide();
+    $(this).closest('fieldset').remove();
     return event.preventDefault();
   });
   return $('form').on('click', '.add_fields', function(event) {

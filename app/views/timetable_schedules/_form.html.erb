@@ -1,0 +1,26 @@
+<%= form_for @timetable_schedule do |f| %>
+	<fieldset>
+		<div class="field">
+			<%= f.label :name %>
+			<%= f.text_field :name %>
+		</div>
+
+		<div class="field">
+			<%= f.label :start_date %>
+			<%= f.datetime_select :start_date %>
+		</div>
+
+		<div class="field">
+			<%= f.label :end_date %>
+			<%= f.datetime_select :end_date %>
+		</div>
+
+		<div class="field">
+			<br />
+			<%= link_to_add_rule "Add rule", f %>
+		</div>
+
+	</fieldset>
+
+	<%= f.submit "Save" %>
+<% end %>
