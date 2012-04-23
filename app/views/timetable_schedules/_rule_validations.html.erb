@@ -1,0 +1,22 @@
+<fieldset>
+	<% partial = escape_javascript(render :partial => 'timetable_schedules/rule_validations/rule_validation_day', :locals => {:f => f }) %>
+	<%= link_to_function "Day", "add_rule(\"#{partial}\", this)", :class => "rule_validation" %>
+
+	<% partial = escape_javascript(render :partial => 'timetable_schedules/rule_validations/rule_validation_day_of_week', :locals => {:f => f }) %>
+	<%= link_to_function "Day of week", "add_rule(\"#{partial}\", this)", :class => "rule_validation" %>
+
+	<% partial = escape_javascript(render :partial => 'timetable_schedules/rule_validations/rule_validation_day_of_month', :locals => {:f => f }) %>
+	<%= link_to_function "Day of month", "add_rule(\"#{partial}\", this)", :class => "rule_validation" %>
+
+	<% partial = escape_javascript(render :partial => 'timetable_schedules/rule_validations/rule_validation_day_of_year', :locals => {:f => f }) %>
+	<%= link_to_function "Day of year", "add_rule(\"#{partial}\", this)", :class => "rule_validation" %>
+
+	<% partial = escape_javascript(render :partial => 'timetable_schedules/rule_validations/rule_validation_month_of_year', :locals => {:f => f }) %>
+	<%= link_to_function "Month of year", "add_rule(\"#{partial}\", this)", :class => "rule_validation" %>
+
+	<div class="rule_validations">
+	</div>
+
+	<%= link_to "-", '#', :class => "remove_fields" %>
+</fieldset>
+<br />

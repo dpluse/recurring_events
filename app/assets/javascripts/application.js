@@ -37,6 +37,6 @@ function add_fields(link, association, content) {
 }
 
 function add_rule(content, link) {
-	$(link).parent().children(".rule").hide();
-	$(link).siblings(".rules").append(content);
+	$(link).parent().children(".rule_validation").hide();
+	$(link).siblings(".rule_validations").append(content);
 }
