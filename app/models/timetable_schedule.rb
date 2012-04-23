@@ -8,8 +8,7 @@ class TimetableSchedule < ActiveRecord::Base
 
   # RULE_TYPES = %w(rrule add_recurrence_rule exrule add_exception_rule extime add_exception_time rtime add_recurrence_time)
   
-  attr_accessor :rules, :rule_validations
-  serialize :schedule, Hash
+  attr_accessor :rules, :rule_validations, :times
   serialize :rule_start_time, Array
   serialize :rule_end_time, Array
 
@@ -26,7 +25,8 @@ class TimetableSchedule < ActiveRecord::Base
 
   def create_ice_cube_schedule
     new_schedule = Schedule.new(self.start_date.blank? ? Time.now : self.start_date, {end_time: self.end_date})
-    rules.each do |rule|
+    rules.each_with_index do |rule, index|
+      create_rule_times(rule, index)
       new_schedule.add_recurrence_rule create_rule(rule)
     end
     
@@ -34,11 +34,39 @@ class TimetableSchedule < ActiveRecord::Base
   end
 
 
+  def create_rule_times(rule, rule_index)
+    start_times = []
+    end_times = []
+
+    if rule[:times].present?
+      rule[:times].each do |time|
+        dt_start = DateTime.new(time['temp_rule_start_time(1i)'].to_i, time['temp_rule_start_time(2i)'].to_i, time['temp_rule_start_time(3i)'].to_i, time['temp_rule_start_time(4i)'].to_i, time['temp_rule_start_time(5i)'].to_i)
+        dt_end = DateTime.new(time['temp_rule_end_time(1i)'].to_i, time['temp_rule_end_time(2i)'].to_i, time['temp_rule_end_time(3i)'].to_i, time['temp_rule_end_time(4i)'].to_i, time['temp_rule_end_time(5i)'].to_i)
+
+        start_times << dt_start
+        end_times << dt_end
+      end
+
+      self.rule_start_time[rule_index] = start_times
+      self.rule_end_time[rule_index] = end_times
+    end
+  end
+
+
   def create_rule(rule)
     if INTERVAL_PERIOD.include? rule[:rule_type]
       interval = rule[:interval].blank? ? 1 : rule[:interval].to_i
 
-      Rule.send(rule[:rule_type].to_s, interval.to_s)
+      ice_cube_rule = Rule.send(rule[:rule_type].to_s, interval.to_s)
+
+      if rule[:rule_validations].present?
+        rule[:rule_validations].each do |key, value|
+          value.each do |value|
+            ice_cube_rule.send(key, value.downcase.to_sym)
+          end
+        end
+      end
+      ice_cube_rule
     else
       raise ArgumentError.new('Rule is not one of the following ' + INTERVAL_PERIOD.to_sentence(:last_word_connector => ' or ') ) 
     end

@@ -10,20 +10,27 @@ module ApplicationHelper
   end
 
 
-  def link_to_add_validation_rule(name, f)
-    fields = f.fields_for("rule_validations") do |builder|
-      render('rule_validations', :f => builder)
-    end
-    link_to_function(name, "add_fields(this, \"rules\", \"#{escape_javascript(fields)}\")")
-  end
-
-
   def link_to_add_rule(name, f)
     fields = f.fields_for("rules", :index => "") do |builder|
       render('rules', :f => builder)
     end
     link_to_function(name, "add_fields(this, \"timetable_schedule\", \"#{escape_javascript(fields)}\")")
   end
-
   
+
+  def link_to_add_validation_rule(name, f)
+    fields = f.fields_for("rule_validations") do |builder|
+      render('rule_validations', :f => builder)
+    end
+    link_to_function(name, "add_fields(this, \"rules\", \"#{escape_javascript(fields)}\")")
+  end  
+
+
+  def link_to_add_time(name, f)
+    fields = f.fields_for("times", :index => "") do |builder|
+      render('times', :f => builder)
+    end
+    link_to_function(name, "add_fields(this, \"rules\", \"#{escape_javascript(fields)}\")")
+  end
+
 end

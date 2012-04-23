@@ -1,4 +1,5 @@
 <fieldset>
+
 	<div class="field">
 		<%= f.select :rule_type, options_for_select([:daily, :weekly, :monthly, :yearly]) %>
 	</div>
@@ -12,7 +13,13 @@
 		<%= link_to_add_validation_rule "+", f %>
 	</div>
 
+	<div class="field">
+		<br />
+		<%= link_to_add_time "Add time", f %>
+	</div>
+
 	<%= link_to "Remove rule", '#', :class => "remove_fields" %>
+
 	
 </fieldset>
 <br />
