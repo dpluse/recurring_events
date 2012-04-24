@@ -58,7 +58,7 @@ class TimetableSchedule < ActiveRecord::Base
     if INTERVAL_PERIOD.include? rule[:rule_type]
       interval = rule[:interval].blank? ? 1 : rule[:interval].to_i
 
-      ice_cube_rule = Rule.send(rule[:rule_type].to_s, interval.to_s)
+      ice_cube_rule = Rule.send(rule[:rule_type].to_s, interval)
 
       if rule[:rule_validations].present?
         rule[:rule_validations].each do |key, value|

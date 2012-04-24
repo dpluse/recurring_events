@@ -30,11 +30,10 @@ class FullCalendarEvents
       # puts "\ntimetable1: #{timetable.inspect}"
       # puts "schedule3: #{timetable.schedule.to_s}"
       occurrances = timetable_schedule.schedule.occurrences_between(start, end_)
-      puts "***************************"+occurrances.inspect
       if occurrances.empty?
         nil
       else
-        event = {name: timetable.name,
+        event = {name: timetable_schedule.name,
                  occurrances: occurrances}
       end
     end.compact
