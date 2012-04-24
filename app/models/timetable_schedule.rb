@@ -11,6 +11,7 @@ class TimetableSchedule < ActiveRecord::Base
   attr_accessor :rules, :rule_validations, :times
   serialize :rule_start_time, Array
   serialize :rule_end_time, Array
+  serialize :schedule, Hash
 
 
   def schedule=(new_schedule)
