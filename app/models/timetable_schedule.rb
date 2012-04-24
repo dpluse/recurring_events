@@ -1,7 +1,7 @@
 class TimetableSchedule < ActiveRecord::Base
   include IceCube
 
-  belongs_to :timetable
+  validate :rules_are_unique
 
 
   INTERVAL_PERIOD = %w(daily weekly monthly yearly)
@@ -29,15 +29,6 @@ class TimetableSchedule < ActiveRecord::Base
      new_schedule.add_recurrence_rule create_rule(rule)
     end
     self.schedule = new_schedule
-  end
-
-  def validate_duplicate_rules(rules)
-    rules.each_with_index do |rule, index|
-      for current_index in (index+1) to rules.length 
-        if rule == rules[current_index] 
-          errors.add(:base, "Rule #{index} and Rule #{current_index} are duplicate rules.") 
-        end 
-      end
   end
 
   def create_rule_times(rule, rule_index)
@@ -115,5 +106,21 @@ class TimetableSchedule < ActiveRecord::Base
   #   end_time_msg = end_time ? " #{end_time}" : " with no end time."
   #   "#{schedule} starting at #{start_time}#{end_time_msg}"
   # end
+
+
+
+
+
+  private
+  
+  def rules_are_unique
+     self.rules.each_with_index do |rule, index|
+      for current_index in (index+1)..(self.rules.length)
+        if rule == self.rules[current_index]
+          errors.add(:rules, "Rule #{index} and Rule #{current_index} are duplicate rules.")
+        end 
+      end
+    end
+  end
 
 end
