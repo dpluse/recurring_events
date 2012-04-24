@@ -46,6 +46,8 @@ ActiveRecord::Schema.define(:version => 20120423142059) do
     t.integer  "created_by_user_id"
     t.integer  "updated_by_user_id"
     t.datetime "updated_at"
+    t.text     "rule_start_time"
+    t.text     "ruke_end_time"
   end
 
 end

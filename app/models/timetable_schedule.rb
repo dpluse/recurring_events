@@ -11,7 +11,7 @@ class TimetableSchedule < ActiveRecord::Base
   attr_accessor :rules, :rule_validations, :times
   serialize :rule_start_time, Array
   serialize :rule_end_time, Array
-
+  serialize :schedule, Hash
 
   def schedule=(new_schedule)
     write_attribute(:schedule, new_schedule.to_hash)
@@ -27,37 +27,42 @@ class TimetableSchedule < ActiveRecord::Base
     new_schedule = Schedule.new(self.start_date.blank? ? Time.now : self.start_date, {end_time: self.end_date})
     rules.each_with_index do |rule, index|
       create_rule_times(rule, index)
-      new_schedule.add_recurrence_rule create_rule(rule)
+     new_schedule.add_recurrence_rule create_rule(rule)
     end
-    
     self.schedule = new_schedule
   end
 
+  def validate_duplicate_rules(rules)
+    rules.each_with_index do |rule, index|
+      for current_index in (index+1) to rules.length 
+        if rule == rules[current_index] 
+          errors.add(:base, "Rule #{index} and Rule #{}{current_index} are duplicate rules.") 
+        end 
+      end
+  end
 
   def create_rule_times(rule, rule_index)
     start_times = []
     end_times = []
-
     if rule[:times].present?
       rule[:times].each do |time|
-        dt_start = DateTime.new(time['temp_rule_start_time(1i)'].to_i, time['temp_rule_start_time(2i)'].to_i, time['temp_rule_start_time(3i)'].to_i, time['temp_rule_start_time(4i)'].to_i, time['temp_rule_start_time(5i)'].to_i)
-        dt_end = DateTime.new(time['temp_rule_end_time(1i)'].to_i, time['temp_rule_end_time(2i)'].to_i, time['temp_rule_end_time(3i)'].to_i, time['temp_rule_end_time(4i)'].to_i, time['temp_rule_end_time(5i)'].to_i)
-
-        start_times << dt_start
-        end_times << dt_end
+        start_times << to_datetime_from_param(time, 'start_time') 
+        end_times << to_datetime_from_param(time, 'end_time')
       end
-
       self.rule_start_time[rule_index] = start_times
       self.rule_end_time[rule_index] = end_times
     end
   end
 
+  def to_datetime_from_param(time, param_name)
+    DateTime.new(time["#{param_name}(1i)"].to_i, time["#{param_name}(2i)"].to_i, time["#{param_name}(3i)"].to_i, time["#{param_name}(4i)"].to_i, time["#{param_name}(5i)"].to_i)
+  end
 
   def create_rule(rule)
     if INTERVAL_PERIOD.include? rule[:rule_type]
       interval = rule[:interval].blank? ? 1 : rule[:interval].to_i
 
-      ice_cube_rule = Rule.send(rule[:rule_type].to_s, interval.to_s)
+      ice_cube_rule = Rule.send(rule[:rule_type].to_s, interval)
 
       if rule[:rule_validations].present?
         rule[:rule_validations].each do |key, value|
