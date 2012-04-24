@@ -20,14 +20,19 @@ class TimetableSchedulesController < ApplicationController
 
   def create
     @timetable_schedule = TimetableSchedule.new(params[:timetable_schedule])
-    @timetable_schedule.create_ice_cube_schedule
-    respond_to do |format|
-      if @timetable_schedule.save
-        format.html { redirect_to(timetable_schedules_path, :notice => 'Timetable schedule was successfully created.') }
-        format.xml  { render :xml => @timetable_schedule }
-      else
-        format.html { render :action => "new" }
-        format.xml  { render :xml => @timetable_schedule.errors }
+    # Check for duplicate rules before saving the TimetableSchedule.
+    # Note: Icecube will not allow duplicate rule entries. Therefore, need to validate that the user has not entered duplicate rules before saving.
+    if @timetable_schedule.validate_duplicate_rules(rules)
+    else
+      @timetable_schedule.create_ice_cube_schedule
+      respond_to do |format|
+        if @timetable_schedule.save
+          format.html { redirect_to(timetable_schedules_path, :notice => 'Timetable schedule was successfully created.') }
+          format.xml  { render :xml => @timetable_schedule }
+        else
+          format.html { render :action => "new" }
+          format.xml  { render :xml => @timetable_schedule.errors }
+        end
       end
     end
   end

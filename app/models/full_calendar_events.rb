@@ -3,7 +3,7 @@ class FullCalendarEvents
   require 'digest/sha1'
   
   attr_accessor :calendar_start, :calendar_end
-  attr_reader :timetables
+  attr_reader :timetable_schedules
   
   def initialize(calendar_start, calendar_end)
     @calendar_start = Time.at(calendar_start.to_i) if (calendar_start.to_i.to_s == calendar_start)
@@ -11,29 +11,29 @@ class FullCalendarEvents
   end
   
   
-  def timetables
-    @timetables ||= Timetable.order(:id).all
+  def timetable_schedules
+    @timetable_schedules ||= TimetableSchedule.order(:id).all
   end
   
   
   def find
     raise "Calendar start and end times are not defined. Maybe the parameters for the constructor were invalid?" unless (@calendar_start && @calendar_end)
     # puts "\n~~~\nFinding events between #{calendar_start.to_s} - #{calendar_end.to_s}\n~~~"
-    occurrences = find_event_occurrences(timetables, calendar_start, calendar_end)
+    occurrences = find_event_occurrences(timetable_schedules, calendar_start, calendar_end)
     # puts "\nOccurrances: #{occurrences.inspect}\n~~~~~~~~~~~~~"
     make_events(occurrences)
   end
   
   
   def find_event_occurrences(events, start, end_)
-    events.map do |timetable|
+    events.map do |timetable_schedule|
       # puts "\ntimetable1: #{timetable.inspect}"
       # puts "schedule3: #{timetable.schedule.to_s}"
-      occurrances = timetable.schedule.occurrences_between(start, end_)
+      occurrances = timetable_schedule.schedule.occurrences_between(start, end_)
       if occurrances.empty?
         nil
       else
-        event = {name: timetable.name,
+        event = {name: timetable_schedule.name,
                  occurrances: occurrances}
       end
     end.compact

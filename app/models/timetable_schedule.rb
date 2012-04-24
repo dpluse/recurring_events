@@ -22,7 +22,6 @@ class TimetableSchedule < ActiveRecord::Base
     Schedule.from_hash(read_attribute(:schedule))
   end
 
-
   def create_ice_cube_schedule
     new_schedule = Schedule.new(self.start_date.blank? ? Time.now : self.start_date, {end_time: self.end_date})
     rules.each_with_index do |rule, index|
@@ -36,7 +35,7 @@ class TimetableSchedule < ActiveRecord::Base
     rules.each_with_index do |rule, index|
       for current_index in (index+1) to rules.length 
         if rule == rules[current_index] 
-          errors.add(:base, "Rule #{index} and Rule #{}{current_index} are duplicate rules.") 
+          errors.add(:base, "Rule #{index} and Rule #{current_index} are duplicate rules.") 
         end 
       end
   end
