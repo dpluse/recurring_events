@@ -1,0 +1,6 @@
+		<% @event_schedule.schedule_rules.each do |rule| %>
+				<% rule.each do |key, value| %>
+					<%= label_tag key %>
+					<%= text_field_tag "event_schedule[schedule_rules][#{key}]]", value %>
+				<% end %>
+			<% end %>
