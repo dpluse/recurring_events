@@ -1,7 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.0'
-gem 'ice_cube'
+gem 'ice_cube', :git => "git@github.com:dpluse/ice_cube.git"
+gem 'debugger'
 
 # HTML
 gem 'simple_form'

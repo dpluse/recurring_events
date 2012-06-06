@@ -11,7 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120423142059) do
+ActiveRecord::Schema.define(:version => 20120525160048) do
+
+  create_table "event_schedules", :force => true do |t|
+    t.text     "schedule"
+    t.datetime "created_at"
+    t.integer  "created_by_user_id"
+    t.integer  "updated_by_user_id"
+    t.datetime "updated_at"
+    t.string   "name"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.text     "rule_start_time"
+    t.text     "rule_end_time"
+  end
 
   create_table "events", :force => true do |t|
     t.string   "name"
@@ -25,19 +38,6 @@ ActiveRecord::Schema.define(:version => 20120423142059) do
     t.integer  "updated_by_user_id"
     t.datetime "updated_at"
     t.integer  "timetable_id"
-  end
-
-  create_table "timetable_schedules", :force => true do |t|
-    t.text     "schedule"
-    t.datetime "created_at"
-    t.integer  "created_by_user_id"
-    t.integer  "updated_by_user_id"
-    t.datetime "updated_at"
-    t.string   "name"
-    t.datetime "start_date"
-    t.datetime "end_date"
-    t.text     "rule_start_time"
-    t.text     "rule_end_time"
   end
 
   create_table "timetables", :force => true do |t|

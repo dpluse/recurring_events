@@ -1,0 +1,25 @@
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Start date</th>
+    <th>End date</th>
+    <th>Action</th>
+  </tr>
+<% @event_schedules.each do |event_schedule| %>
+  <tr class="<%= cycle('list_line_odd', 'list_line_even') %>">
+    <td>
+      <%= event_schedule.name %>
+    </td>
+    <td>
+      <%= event_schedule.start_date %>
+    </td>
+    <td>
+      <%= event_schedule.end_date %>
+    </td>
+    <td class="list_actions">
+      <%= link_to 'Edit', edit_event_schedule_path(event_schedule) %>
+      <%= link_to 'Delete', event_schedule, :confirm => 'Are you sure?', :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>

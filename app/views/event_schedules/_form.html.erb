@@ -1,0 +1,41 @@
+<%=  form_for @event_schedule do |f| %>
+ <% if @event_schedule.errors.any? %>
+      <ul>
+         <% @event_schedule.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+         <% end %>
+      </ul>
+   <% end %>
+	<fieldset>
+		
+		<div class="field">
+			<%= f.label :name %>
+			<%= f.text_field :name %>
+		</div>
+		
+		<div class="field">
+			<%= f.label :start_date %>
+			<%= f.datetime_select :start_date %>
+		</div>
+		
+		<div class="field">
+			<%= f.label :end_date %>
+			<%= f.datetime_select :end_date %>
+		</div>
+		
+		<% @event_schedule.schedule_rules.each do |rule| %>
+				<% rule.each do |key, value| %>
+					<%= label_tag key %>
+					<%= text_field_tag "event_schedule[schedule_rules][#{key}]]", value %>
+				<% end %>
+			<% end %>
+
+		<div class="field">
+			<br />
+			<%= link_to_add_rule "Add Schedule Rule", f %>
+		</div>
+
+	</fieldset>
+
+	<%= f.submit "Save" %>
+<% end %>

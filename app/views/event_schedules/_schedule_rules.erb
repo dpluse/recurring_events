@@ -1,12 +1,15 @@
 <fieldset>
+	
 	<div class="field">
-		<%= f.select :rule_type, options_for_select([:daily, :weekly, :monthly, :yearly]) %>
+		<%= f.label :rule_type %>
+		<%= f.select :rule_type, options_for_select(['daily', 'weekly', 'monthly', 'yearly']) %>
 	</div>
 
 	<div class="field">
+		<%= f.label :interval %>
 		<%= f.text_field :interval %>
 	</div>
-
+	
 	<div class="field">
 		<br />
 		<%= link_to_add_validation_rule "+", f %>
